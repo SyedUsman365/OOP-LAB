@@ -1,80 +1,103 @@
 #include <iostream>
 using namespace std;
-class carsystem{
+class Car
+{
     string brand;
     string model;
-    double rentalprice;
+    double rentalPrice;
     bool status;
 
-    public:
-    carsystem (){
-        brand="Unknown";
-        model="generic";
-        rentalprice=0.0;
-        status=true;
+public:
+    Car()
+    {
+        brand = "Unknown";
+        model = "generic";
+        rentalPrice = 0.0;
+        status = true;
     }
-    void setbrand(string name){
-        brand=name;
+    Car(string name1, string name2, double rentalprice1, bool status1)
+    {
+        brand = name1;
+        model = name2;
+        rentalPrice = rentalprice1;
+        status = status1;
     }
-    void setmodel(string name){
-        model=name;
+    Car(const Car &c)
+    {
+        brand = c.brand;
+        model = c.model;
+        rentalPrice = c.rentalPrice;
+        status = true;
     }
-    void setprice(double num){
-        if(num>0.0){
-            rentalprice=num;
 
+    ~Car()
+    {
+        cout << "Car " << brand << " " << model << " deleted." << endl;
+    }
+    void setBrand(string name) { brand = name; }
+    void setModel(string name) { model = name; }
+    void setPrice(double num)
+    {
+        if (num > 0.0)
+            rentalPrice = num;
+    }
+    void setStatus(bool status1) { status = status1; }
+
+    void checkStatus()
+    {
+        cout << (status ? "The car is available" : "The car is unavailable") << endl;
+    }
+    void rentCar()
+    {
+        if (status)
+        {
+            status = false;
+            cout << "Car rented successfully." << endl;
+        }
+        else
+        {
+            cout << "Car is already rented!" << endl;
         }
     }
-    void setstatus(bool status1){
-        status=status1;
-    }
-    void checkstatus(){
-        if(status){
-            cout<<"The car is available"<<endl;
-        } else{
-            cout<<"The car is unavailable"<<endl;
+    void applyDiscount(int days)
+    {
+        if (days > 10)
+        {
+            rentalPrice *= 0.90;
+        }
+        else if (days > 5)
+        {
+            rentalPrice *= 0.95;
         }
     }
-    carsystem(string name1,string name2,double rentalprice1,bool status1){
-    brand=name1;
-    model=name2;
-    rentalprice=rentalprice1;
-    status=status1;
-    }
-    carsystem(const carsystem &c){
-brand=c.brand;
-model=c.model;
-rentalprice=c.rentalprice;
-status=true;
-}
-    void applydiscount(int days){
-      if(days > 5){
-        rentalprice*=0.05;
-      }
-      else if(days>10){
-        rentalprice*=0.10;
-      }
-    }
-    void display(){
-        cout<<"................................................."<<endl;
-        cout<<"brand"<<brand<<endl;
-        cout<<"model"<<model<<endl;
-        cout<<"price"<<rentalprice<<endl;
-        cout<<""<<endl;
-    }
-    ~carsystem(){
-        cout<<"deleted"<<endl;
+    void display()
+    {
+        cout << "--------------------------------" << endl;
+        cout << "Brand: " << brand << endl;
+        cout << "Model: " << model << endl;
+        cout << "Rental Price: $" << rentalPrice << endl;
+        cout << "Availability: " << (status ? "Available" : "Rented") << endl;
+        cout << "--------------------------------" << endl;
     }
 };
-int main(){
-carsystem car1;
-carsystem car2=car1;
-car1.setbrand("toyota");
-car1.setmodel("honda");
-car1.setprice(200);
-car1.setstatus(true);
-cout<<"displaying car1:"<<endl;
-car1.display();
-cout<<"diplaying car2"<<endl;
-car2.display();
+int main()
+{
+    Car car1;
+    car1.setBrand("Toyota");
+    car1.setModel("Corolla");
+    car1.setPrice(200);
+    car1.setStatus(true);
+    Car car2 = car1;
+    car1.setBrand("Honda");
+    car1.setModel("Civic");
+    car1.setPrice(180);
+    car1.setStatus(false);
+    cout << "Displaying car1:" << endl;
+    car1.display();
+    cout << "Displaying car2" << endl;
+    car2.display();
+    cout << "Attempting to rent car2:" << endl;
+    car2.rentCar();
+    car2.checkStatus();
+    return 0;
 }
