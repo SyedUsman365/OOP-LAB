@@ -1,0 +1,144 @@
+#include <iostream>
+using namespace std;
+
+class car
+{
+    string brand;
+    string model;
+    float rentalprice;
+    bool available;
+    float totalrevenue;
+    int carID;
+
+public:
+    car() : carID(0)
+    {
+        brand = "Unknown";
+        model = "Generic";
+        rentalprice = 0.0;
+        available = true;
+        totalrevenue = 0.0;
+    }
+
+    car(int id, string b, string m, float r, bool a) : carID(id)
+    {
+        brand = b;
+        model = m;
+        rentalprice = r;
+        available = a;
+        totalrevenue = 0.0;
+    }
+
+    car(const car &c) : carID(c.carID)
+    {
+        brand = c.brand;
+        model = c.model;
+        rentalprice = c.rentalprice;
+        available = c.available;
+        totalrevenue = c.totalrevenue;
+    }
+
+    ~car()
+    {
+        cout << "Car with ID " << carID << " is deleted" << endl;
+    }
+
+    void applydiscount(int days, float &finalprice)
+    {
+        if (days > 10)
+        {
+            finalprice = rentalprice * 0.90;
+        }
+        else if (days > 5)
+        {
+            finalprice = rentalprice * 0.95;
+        }
+        else
+        {
+            finalprice = rentalprice;
+        }
+    }
+
+    void updaterevenue(int days, float finalprice)
+    {
+        totalrevenue += finalprice * days;
+    }
+
+    void updatecar(int id, string b, string m, float r, bool a)
+    {
+        carID = id;
+        brand = b;
+        model = m;
+        rentalprice = r;
+        available = a;
+    }
+
+    void checkavailability()
+    {
+        if (available)
+        {
+            cout << "Car is available for rent" << endl;
+        }
+        else
+        {
+            cout << "Car is not available for rent" << endl;
+        }
+    }
+
+    void rentcar()
+    {
+        if (available)
+        {
+            int days;
+            cout << "How many days do you want to rent the car: ";
+            cin >> days;
+            float finalprice;
+            applydiscount(days, finalprice);
+            updaterevenue(days, finalprice);
+            cout << "Congratulations! Car is rented at $" << finalprice << " per day" << endl;
+            available = false;
+        }
+        else
+        {
+            cout << "Sorry! Car is not available for rent" << endl;
+        }
+    }
+
+    void display()
+    {
+        cout << "Car ID: " << carID << endl;
+        cout << "Brand: " << brand << endl;
+        cout << "Model: " << model << endl;
+        cout << "Rental Price: $" << rentalprice << endl;
+        cout << "Available: " << (available ? "Yes" : "No") << endl;
+        cout << "Total Revenue: $" << totalrevenue << endl;
+    }
+};
+
+int main()
+{
+    car c1(101, "Ferrari", "V8", 400, true);
+    car c2 = c1;
+
+    cout << "Car 1 availability: ";
+    c1.checkavailability();
+    cout << "\nCar 2 availability: ";
+    c2.checkavailability();
+
+    c2.updatecar(102, "Toyota", "Mitsubishi", 100, false);
+
+    cout << "\nCar 1 availability: ";
+    c1.checkavailability();
+    cout << "\nCar 2 availability after modification: ";
+    c2.checkavailability();
+
+    c1.rentcar();
+
+    cout << "After renting car 1" << endl;
+    cout << "Car 1 details" << endl;
+    c1.display();
+    cout << "Car 2 details" << endl;
+    c2.display();
+
+    return 0;
+}
