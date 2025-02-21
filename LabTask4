@@ -1,0 +1,80 @@
+#include <iostream>
+using namespace std;
+class carsystem{
+    string brand;
+    string model;
+    double rentalprice;
+    bool status;
+
+    public:
+    carsystem (){
+        brand="Unknown";
+        model="generic";
+        rentalprice=0.0;
+        status=true;
+    }
+    void setbrand(string name){
+        brand=name;
+    }
+    void setmodel(string name){
+        model=name;
+    }
+    void setprice(double num){
+        if(num>0.0){
+            rentalprice=num;
+
+        }
+    }
+    void setstatus(bool status1){
+        status=status1;
+    }
+    void checkstatus(){
+        if(status){
+            cout<<"The car is available"<<endl;
+        } else{
+            cout<<"The car is unavailable"<<endl;
+        }
+    }
+    carsystem(string name1,string name2,double rentalprice1,bool status1){
+    brand=name1;
+    model=name2;
+    rentalprice=rentalprice1;
+    status=status1;
+    }
+    carsystem(const carsystem &c){
+brand=c.brand;
+model=c.model;
+rentalprice=c.rentalprice;
+status=true;
+}
+    void applydiscount(int days){
+      if(days > 5){
+        rentalprice*=0.05;
+      }
+      else if(days>10){
+        rentalprice*=0.10;
+      }
+    }
+    void display(){
+        cout<<"................................................."<<endl;
+        cout<<"brand"<<brand<<endl;
+        cout<<"model"<<model<<endl;
+        cout<<"price"<<rentalprice<<endl;
+        cout<<""<<endl;
+    }
+    ~carsystem(){
+        cout<<"deleted"<<endl;
+    }
+};
+int main(){
+carsystem car1;
+carsystem car2=car1;
+car1.setbrand("toyota");
+car1.setmodel("honda");
+car1.setprice(200);
+car1.setstatus(true);
+cout<<"displaying car1:"<<endl;
+car1.display();
+cout<<"diplaying car2"<<endl;
+car2.display();
+}
