@@ -1,0 +1,60 @@
+#include <iostream>
+using namespace std;
+
+class Appartment
+{
+    int id;
+    string address;
+    string *username;
+
+public:
+    Appartment(int id, string address) : id(id), address(address)
+    {
+        username = new string;
+        cout << "Enter your name: ";
+        getline(cin, *username);
+    }
+
+    Appartment(const Appartment &object)
+    {
+        id = object.id;
+        address = object.address;
+        username = new string(*object.username);
+    }
+
+    ~Appartment()
+    {
+        delete username;
+    }
+
+    void setUsername(string name)
+    {
+        *username = name;
+    }
+
+    void display()
+    {
+        cout << "User ID: " << id << endl;
+        cout << "Address: " << address << endl;
+        cout << "User Name: " << *username << endl;
+    }
+};
+
+int main()
+{
+    cout << "Enter ID for Apartment #1: ";
+    int n1;
+    cin >> n1;
+    cin.ignore();
+
+    cout << "Enter address for Apartment #1: ";
+    string address;
+    getline(cin, address);
+
+    Appartment Appartment1(n1, address);
+    Appartment1.display();
+
+    Appartment Appartment2 = Appartment1;
+    Appartment2.display();
+    return 0;
+}
