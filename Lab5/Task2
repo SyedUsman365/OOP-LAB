@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+
+class student
+{
+    int id;
+    int *scores;
+    int numScores;
+    string name;
+
+public:
+    student(int i, string n)
+    {
+        id = i;
+        name = n;
+        int num;
+        cout << "\nenter ID:";
+        cin >> i;
+        cout << "enter number of scores:";
+        cin >> num;
+        id = i;
+        scores = new int[num];
+        numScores = num;
+        for (int i = 0; i < num; i++)
+        {
+            cout << "enter score#" << i + 1 << " : ";
+            cin >> scores[i];
+        }
+    }
+    student(const student &obj)
+    {
+        id = obj.id;
+        name = obj.name;
+        numScores = obj.numScores;
+        scores = new int[obj.numScores];
+        for (int i = 0; i < obj.numScores; i++)
+        {
+            scores[i] = obj.scores[i];
+        }
+    }
+    void display()
+    {
+        cout << "ID: " << id << "\n";
+        cout << "Name: " << name << endl;
+        for (int i = 0; i < numScores; i++)
+        {
+            cout << "Score # " << i + 1 << " : " << scores[i] << endl;
+        }
+    }
+    ~student()
+    {
+        delete[] scores;
+    }
+};
+
+int main()
+{
+    student Usman(0567, "Syed Usman Hassan");
+    student Usman2(Usman);
+    Usman.display();
+    Usman2.display();
+}
