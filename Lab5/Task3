@@ -1,0 +1,101 @@
+#include <iostream>
+using namespace std;
+
+class Employee
+{
+    string Name;
+    string Designation;
+
+public:
+    Employee(string name, string designation) : Name(name), Designation(designation) {}
+
+    void display()
+    {
+        cout << "Name: " << Name << endl;
+        cout << "Designation: " << Designation << endl;
+    }
+};
+
+class Project
+{
+    string Title;
+    string Deadline;
+    int NumberOfEmployees;
+    int CurrentCount;
+    Employee **List;
+
+public:
+    Project(string title, string deadline, int num)
+        : Title(title), Deadline(deadline), NumberOfEmployees(num), CurrentCount(0)
+    {
+        List = new Employee *[NumberOfEmployees];
+    }
+
+    ~Project()
+    {
+        delete[] List;
+    }
+
+    void addEmployee(Employee *e)
+    {
+        if (CurrentCount < NumberOfEmployees)
+        {
+            List[CurrentCount++] = e;
+        }
+        else
+        {
+            cout << "Cannot add more employees, project is full." << endl;
+        }
+    }
+
+    void display()
+    {
+        cout << "TITLE: " << Title << endl;
+        cout << "Deadline: " << Deadline << endl;
+        cout << "Employees on the project:\n";
+        for (int i = 0; i < CurrentCount; i++)
+        {
+            cout << "Employee " << i + 1 << endl;
+            List[i]->display();
+        }
+    }
+};
+
+int main()
+{
+    Employee *E1 = new Employee("Usman", "Manager");
+    Employee *E2 = new Employee("Umer", "Developer");
+    Employee *E3 = new Employee("Moosa", "Designer");
+    Employee *E4 = new Employee("Faseeh", "Analyst");
+    Employee *E5 = new Employee("Abdullah", "Tester");
+    Employee *E6 = new Employee("Mustafa", "HR");
+    Employee *E7 = new Employee("Raiyan", "Support");
+    Employee *E8 = new Employee("Ahmed", "Support");
+    Employee *E9 = new Employee("Hani", "Design Manager");
+
+    Project p1("Data System", "27-02-2025", 9);
+
+    p1.addEmployee(E1);
+    p1.addEmployee(E2);
+    p1.addEmployee(E3);
+    p1.addEmployee(E4);
+    p1.addEmployee(E5);
+    p1.addEmployee(E6);
+    p1.addEmployee(E7);
+    p1.addEmployee(E8);
+    p1.addEmployee(E9);
+
+    p1.display();
+
+    delete E1;
+    delete E2;
+    delete E3;
+    delete E4;
+    delete E5;
+    delete E6;
+    delete E7;
+    delete E8;
+    delete E9;
+
+    return 0;
+}
