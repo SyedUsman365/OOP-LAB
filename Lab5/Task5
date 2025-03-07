@@ -1,0 +1,68 @@
+#include <iostream>
+using namespace std;
+
+class doctor
+{
+    string name;
+    string specialization;
+    string experience;
+
+public:
+    doctor(string n, string s, string e) : name(n), specialization(s), experience(e) {}
+    void display()
+    {
+        cout << "Name:" << name << endl;
+        cout << "Specialization At:" << specialization << endl;
+        cout << "Experience Of: " << experience << endl;
+    }
+};
+
+class hospital
+{
+    string name;
+    string owner;
+    int numofDoctors = 0;
+    doctor **list;
+
+public:
+    hospital(string n, string o, int num)
+    {
+        name = n;
+        owner = o;
+        numofDoctors = num;
+        list = new doctor *[num];
+    }
+    ~hospital() { delete[] list; }
+    void addDoctor(doctor *d, int index)
+    {
+        if (index < numofDoctors)
+            list[index] = d;
+    }
+    void display()
+    {
+        cout << "Name:" << name << endl;
+        cout << "Owner:" << owner << endl;
+        cout << "Number of doctors:" << numofDoctors << endl;
+        for (int i = 0; i < numofDoctors; i++)
+        {
+            cout << "\nDoctor#" << i + 1 << endl;
+            list[i]->display();
+        }
+    }
+};
+
+int main()
+{
+    hospital hosp("Agha Khan Hospital", "Agha", 3);
+    doctor doc1("Usman", "Child Speacialist", "2 years");
+    doctor doc2("Umer", "Heart Speacialist", "3 years");
+    doctor doc3("Moosa", "Cardiovascular doctor", "4 years");
+
+    hosp.addDoctor(&doc1, 0);
+    hosp.addDoctor(&doc2, 1);
+    hosp.addDoctor(&doc3, 2);
+
+    hosp.display();
+
+    return 0;
+}
