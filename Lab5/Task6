@@ -1,0 +1,63 @@
+#include <iostream>
+using namespace std;
+
+class Level
+{
+    int difficulty;
+    string name;
+
+public:
+    Level(string n, int d) : name(n), difficulty(d) {}
+    void display()
+    {
+        cout << "Level: " << name << endl;
+        cout << "Difficulty: " << difficulty << endl;
+    }
+};
+
+class VideoGame
+{
+    string title;
+    string genre;
+    int numofLevels;
+    Level **levels;
+
+public:
+    VideoGame(string t, string g, int num) : title(t), genre(g), numofLevels(num)
+    {
+        levels = new Level *[num];
+    }
+    ~VideoGame() { delete[] levels; }
+    void addLevel(Level *l, int index)
+    {
+        if (index < numofLevels)
+            levels[index] = l;
+    }
+    void display()
+    {
+        cout << "Title: " << title << endl;
+        cout << "Genre: " << genre << endl;
+        cout << "Number of Levels: " << numofLevels << endl;
+        for (int i = 0; i < numofLevels; i++)
+        {
+            cout << "\nLevel # " << i + 1 << endl;
+            levels[i]->display();
+        }
+    }
+};
+
+int main()
+{
+    VideoGame Game("Fortnite", "Battle Royale", 3);
+    Level L1("Easy", 1);
+    Level L2("Medium", 2);
+    Level L3("Hard", 3);
+
+    Game.addLevel(&L1, 0);
+    Game.addLevel(&L2, 1);
+    Game.addLevel(&L3, 2);
+
+    Game.display();
+
+    return 0;
+}
