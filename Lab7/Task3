@@ -1,1 +1,93 @@
+#include <iostream>
+using namespace std;
+class Ticket
+{
+protected:
+    int ticketID;
+    double price;
+    string passengerName;
+    string date;
+    string destination;
+public:
+    Ticket(int id, string name, double pr, string d, string dest)
+        : ticketID(id), passengerName(name), price(pr), date(d), destination(dest) {}
+    virtual void reserve()
+    {
+        cout << "Ticket reserved for" << passengerName << "to" << destination << "on" << date << "\n";
+    }
+    virtual void cancel()
+    {
+        cout << "Ticket with ID Number " << ticketID << " has been cancelled.\n";
+    }
+    virtual void displayTicketInfo()
+    {
+        cout << "Ticket ID: " << ticketID << "Passenger: " << passengerName
+             << "Price: " << price << "Date: " << date << "Destination: " << destination << "\n";
+    }
+};
+class FlightTicket : public Ticket
+{
+    string airlineName;
+    string flightNumber;
+    string seatClass;
+public:
+    FlightTicket(int id, string name, double pr, string d, string dest, string airline, string flight, string seat)
+        : Ticket(id, name, pr, d, dest), airlineName(airline), flightNumber(flight), seatClass(seat) {}
+    void displayTicketInfo() override
+    {
+        Ticket::displayTicketInfo();
+        cout << "Airline Name: " << airlineName << "Flight Number: " << flightNumber << "Class: " << seatClass << "\n";
+    }
+};
+class TrainTicket : public Ticket
+{
+    string trainNumber;
+    string coachType;
+    string departureTime;
+public:
+    TrainTicket(int id, string name, double pr, string d, string dest, string train, string coach, string time)
+        : Ticket(id, name, pr, d, dest), trainNumber(train), coachType(coach), departureTime(time) {}
 
+    void reserve() override
+    {
+        cout << "Train seat assigned for " << passengerName << "on" << trainNumber << endl;
+    }
+};
+class BusTicket : public Ticket
+{
+    int seatNumber;
+    string busCompany;
+public:
+    BusTicket(int id, string name, double pr, string d, string dest, string company, int seat)
+        : Ticket(id, name, pr, d, dest), busCompany(company), seatNumber(seat) {}
+    void cancel() override
+    {
+        cout << "Last minute refund for bus ticket " << ticketID << endl;
+    }
+};
+class ConcertTicket : public Ticket
+{
+    string artistName;
+    string venue;
+    string seatType;
+public:
+    ConcertTicket(int id, string name, double pr, string d, string dest, string artist, string v, string seat)
+        : Ticket(id, name, pr, d, dest), artistName(artist), venue(v), seatType(seat) {}
+    void displayTicketInfo() override
+    {
+        Ticket::displayTicketInfo();
+        cout << "Artist: " << artistName << "Venue: " << venue << "Seat Type: " << seatType << "\n";
+    }
+};
+int main()
+{
+    FlightTicket f1(1, "Syed Usman Hassan", 4000, "2025-03-10", "Jeddah", "Saudi Arilines", "SA701", "Economy");
+    f1.displayTicketInfo();
+    TrainTicket t1(2, "Abdullah", 2000, "2025-03-11", "Karachi", "Green Line", "Buisness", "12:00 AM");
+    t1.reserve();
+    BusTicket b1(3, "Kabeer", 4500, "2025-03-12", "Islamabad", "Khan Coach", 13);
+    b1.cancel();
+    ConcertTicket c1(4, "Adil", 5000, "2025-03-13", "Karachi", "Atif Aslam", "Fast", "VVIP");
+    c1.displayTicketInfo();
+    return 0;
+}
