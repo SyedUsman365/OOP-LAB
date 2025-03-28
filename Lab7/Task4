@@ -11,7 +11,7 @@ public:
     Person(string n, int a, string c, string ad = "") : name(n), age(a), contactNumber(c), address(ad) {}
     virtual void displayInfo()
     {
-        cout << "Name:" << name << " Age: " << age << " Contact: " << contactNumber << " Address: " << address <<endl;
+        cout << "Name:" << name << " Age: " << age << " Contact: " << contactNumber << endl;
     }
     virtual void updateInfo(string newContact)
     {
@@ -41,7 +41,7 @@ public:
     void displayInfo() override
     {
         Person::displayInfo();
-        cout << "Specialization:" << specialization << " Consultation Fee:" << consultationFee << " Patients List:" << patientsList <<endl;
+        cout << "Specialization:" << specialization << " Consultation Fee:" << consultationFee << " Patients List:" << patientsList << endl;
     }
 };
 class Nurse : public Person
@@ -70,17 +70,17 @@ public:
 };
 int main()
 {
-    Patient p1("Syed Usman Hassan", 18, "0501093829",1, "Fever", "Dr Kabeer");
+    Patient p1("Syed Usman Hassan", 18, "0501093829", 1, "Fever", "Dr Kabeer");
     Doctor d1("Dr Kabeer", 18, "03210887697", "General Physician", 4000, "Syed Usman Hassan,Umer");
     Nurse n1("Dua", 18, "03151234567", "Emergency", "Night");
     Administrator a1("Abdullah", 24, "0501430229", "Human Resources", 50000);
-    cout << "Patient Info:-"<<endl;
+    cout << "Patient Info:-" << endl;
     p1.displayInfo();
-    cout << "Doctor Info:-"<<endl;
+    cout << "Doctor Info:-" << endl;
     d1.displayInfo();
-    cout << "Nurse Info:-"<<endl;
+    cout << "Nurse Info:-" << endl;
     n1.displayInfo();
-    cout << "Administrator Info:-"<<endl;
+    cout << "Administrator Info:-" << endl;
     a1.updateInfo("0501430228");
     return 0;
 }
