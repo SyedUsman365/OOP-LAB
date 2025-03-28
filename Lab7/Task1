@@ -7,6 +7,7 @@ protected:
     bool status;
     string name;
     string location;
+
 public:
     device(int id, string n, string loc) : deviceId(id), name(n), status(false), location(loc) {}
     virtual void turnOn() { status = true; }
