@@ -55,8 +55,8 @@ public:
 int main()
 {
 
-    LectureCourse l("PF", 3);
-    LabCourse la("PF Lab", 1);
+    LectureCourse l("CS001", 3);
+    LabCourse la("CS002", 1);
     Course *lecture = &l;
 
     lecture->displayInfo();
