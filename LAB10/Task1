@@ -1,0 +1,23 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+using namespace std;
+int main()
+{
+    ifstream file;
+    string readFile;
+    file.open("vehicles.txt");
+    if (file.is_open())
+    {
+        while (getline(file, readFile))
+        {
+            cout << readFile << endl;
+        }
+        file.close();
+    }
+    else
+    {
+        cerr << "Unable to open the vehicles file." << endl;
+        exit(1);
+    }
+}
