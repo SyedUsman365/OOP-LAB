@@ -1,0 +1,25 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main()
+{
+    ofstream file1("sensor_log.txt");
+
+    if (file1.is_open())
+    {
+        file1 << "Sensor1: 45oC" << endl;
+        streampos position1 = file1.tellp();
+        cout << "Position after first line: " << position1 << endl;
+
+        file1 << "Sensor2: 56%RH" << endl;
+        streampos position2 = file1.tellp();
+        cout << "Position after Second line: " << position2 << endl;
+
+        file1.close();
+    }
+    else
+    {
+        cout << "Error in opening file" << endl;
+    }
+}
