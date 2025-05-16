@@ -1,0 +1,2 @@
+Sensor1: 45oC
+Sensor2: 56%RH
