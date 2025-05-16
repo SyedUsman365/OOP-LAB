@@ -1,0 +1,92 @@
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <fstream>
+using namespace std;
+
+int main()
+{
+    ifstream file;
+    string readFile;
+
+    file.open("Vehicle.txt");
+
+    string type, ID, name, Year;
+    string extraData;
+    string certification;
+
+    if (file.is_open())
+    {
+        while (getline(file, readFile))
+        {
+            istringstream newFiles(readFile);
+            getline(newFiles, type, ',');
+            getline(newFiles, ID, ',');
+            getline(newFiles, name, ',');
+            getline(newFiles, Year, ',');
+            getline(newFiles, extraData, ',');
+            getline(newFiles, certification, ',');
+
+            cout << "Type: " << type << endl;
+            cout << "ID: " << ID << endl;
+            cout << "Name: " << name << endl;
+            cout << "Year: " << Year << endl;
+            cout << "Extra Data: " << extraData << endl;
+            cout << "Certification: " << certification << endl;
+
+            if (type == "Autonomous Car")
+            {
+                size_t colonPosition = extraData.find(':');
+                if (colonPosition != string::npos)
+                {
+                    string newValue = extraData.substr(colonPosition + 1);
+                    float carVersion = stof(newValue);
+                    cout << "Vehicle ID (" << ID << ") Car Version is: " << carVersion << endl;
+                }
+            }
+            else if (type == "ElectricVehicle")
+            {
+                size_t colonPosition = extraData.find(':');
+
+                if (colonPosition != string::npos)
+                {
+                    string newValue = extraData.substr(colonPosition + 1);
+                    int batteryCapacity = stoi(newValue);
+                    cout << "Vehicle ID (" << ID << ") Battery Capacity is: " << batteryCapacity << endl;
+                }
+            }
+            else if (type == "Hybrid Truck")
+            {
+                size_t cargoColonPos = extraData.find("Cargo:");
+                size_t pipePosition = extraData.find('|');
+                size_t batteryColonPos = extraData.find("Battery:");
+
+                if (cargoColonPos != string::npos && pipePosition != string::npos && batteryColonPos != string::npos)
+                {
+                    size_t cargoStartPos = cargoColonPos + 6;
+                    size_t cargoLength = pipePosition - cargoStartPos;
+                    string newValue2 = extraData.substr(cargoStartPos, cargoLength);
+                    int carg = stoi(newValue2);
+
+                    size_t batteryPos = batteryColonPos + 8;
+                    string newValue3 = extraData.substr(batteryPos);
+                    int battery = stoi(newValue3);
+
+                    cout << "Vehicle ID: " << ID << " -> Cargo Capacity: " << carg << " -> Battery Capacity: " << battery << endl;
+                }
+            }
+            else
+            {
+                cout << "Not a valid information of given task" << endl;
+            }
+
+            cout << "<<------------------------------------>>" << endl;
+        }
+        file.close();
+    }
+    else
+    {
+        cerr << "Unable to open the file" << endl;
+        exit(1);
+    }
+}
