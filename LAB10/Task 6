@@ -1,0 +1,36 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+class InventorySystem
+{
+public:
+    int itemID;
+    char itemName[20];
+};
+
+int main()
+{
+    InventorySystem Inv1 = {2993, "LUX soap"};
+    ofstream newFile("inventory.dat", ios::binary);
+    if (!newFile)
+    {
+        cout << "Error opening file for writing!" << endl;
+        return 1;
+    }
+    newFile.write((char *)&Inv1, sizeof(Inv1));
+    newFile.close();
+
+    InventorySystem Inv2;
+    ifstream newFile1("inventory.dat", ios::binary);
+    if (!newFile1)
+    {
+        cout << "Error opening file for writing!" << endl;
+        return 1;
+    }
+    newFile1.read((char *)&Inv2, sizeof(Inv2));
+    newFile1.close();
+
+    cout << "Item ID: " << Inv2.itemID << endl;
+    cout << "Item Name: " << Inv2.itemName << endl;
+}
