@@ -1,0 +1,32 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main()
+{
+    ifstream newFile;
+    newFile.open("large_log.txt");
+
+    if (!newFile)
+    {
+        cerr << "Can not open the file" << endl;
+        exit(1);
+    }
+
+    char buffer[11];
+    newFile.read(buffer, 10);
+    buffer[10] = {0};
+    cout << "First 10 characters are: " << buffer << endl;
+
+    streampos position1 = newFile.tellg();
+    cout << "Position after first 10 characters: " << position1 << endl;
+
+    newFile.read(buffer, 10);
+    buffer[10] = {0};
+    cout << "Next 10 characters are: " << buffer << endl;
+
+    streampos position2 = newFile.tellg();
+    cout << "Position after next 10 characters: " << position2 << endl;
+
+    newFile.close();
+}
