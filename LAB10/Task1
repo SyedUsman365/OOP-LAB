@@ -20,4 +20,5 @@ int main()
         cerr << "Unable to open the vehicles file." << endl;
         exit(1);
     }
+
 }
